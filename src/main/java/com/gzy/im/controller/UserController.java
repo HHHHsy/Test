@@ -21,8 +21,8 @@ public class UserController {
     @Resource
     UserRepository userRepository;
 
-    @GetMapping("/userifo")
-    Object userifo(Long userid,String token){
+    @GetMapping("/userinfo")
+    Object userinfo(Long userid,String token){
         Token tokenByToken =  tokenRepository.findTokenByToken(token);
 
         if (tokenByToken==null) {
@@ -33,11 +33,9 @@ public class UserController {
         }
         Optional<User> userOptional = userRepository.findById(userid);
         if (userOptional.isPresent()) {
-            return null;
+            return userOptional.get();
         }
+        return  ResponseEntity.notFound().build();
 
-
-
-        return null;
     }
 }
